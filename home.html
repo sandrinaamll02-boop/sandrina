@@ -60,12 +60,12 @@
         if (nama) {
             document.getElementById('greeting').textContent = `Hai ${nama}`;
         } else {
-            window.location.href = 'login.html'; // Kembali ke login jika tidak ada nama
+            window.location.href = 'index.html'; // Kembali ke login jika tidak ada nama
         }
 
         function logout() {
             localStorage.removeItem('namaPengguna'); // Hapus nama dari localStorage
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
         }
     </script>
 </body>
