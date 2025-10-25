@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulasi Usaha dan Energi (Tanpa Gesekan)</title>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+        h1 {
+            color: #0056b3;
+            margin-bottom: 20px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 1200px;
+            gap: 20px;
+        }
+        .panel {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .controls {
+            flex-basis: 300px;
+            flex-grow: 1;
+        }
+        .controls h2 {
+            margin-top: 0;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .control-group {
+            margin-bottom: 15px;
+        }
+        .control-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .control-group input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+        }
+        .control-group span {
+            font-family: monospace;
+            font-size: 1.1em;
+            color: #0056b3;
+            font-weight: bold;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            margin-right: 10px;
+            transition: background-color 0.2s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        button#resetButton {
+            background-color: #6c757d;
+        }
+        button#resetButton:hover {
+            background-color: #5a6268;
+        }
+
+        .simulation-area {
+            flex-basis: 700px;
+            flex-grow: 2;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        canvas {
+            background: #fdfdfd;
+            border: 1px solid #ddd;
+            width: 100%;
+            border-radius: 4px;
+        }
+
+        #energy-charts {
+            display: flex;
+            justify-content: space-around;
+            height: 180px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #fdfdfd;
+        }
+        .chart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 30%;
+        }
+        .bar-container {
+            width: 60px;
+            height: 100px;
+            background: #eee;
+            border: 1px solid #ccc;
+            position: relative;
+            overflow: hidden;
+            border-radius: 3px;
+        }
+        .bar {
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            transition: height 0.1s linear;
+        }
+        #pe-bar { background-color: #4CAF50; }
+        #ke-bar { background-color: #f44336; }
+        #total-bar { background-color: #2196F3; }
+        
+        .chart-label {
+            font-size: 0.9em;
+            font-weight: 500;
+            margin-top: 5px;
+            text-align: center;
+        }
+        .chart-value {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-top: 4px;
+            color: #333;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Simulasi Usaha dan Energi (Tanpa Gesekan)</h1>
+    
+    <div class="container">
+        <div class="panel controls">
+            <h2>Panel Kontrol</h2>
+            
+            <div class="control-group">
+                <label for="hSlider">Ketinggian (h): <span id="hValue">10</span> m</label>
+                <input type="range" id="hSlider" min="1" max="15" value="10" step="0.5">
+            </div>
+            
+            <div class="control-group">
+                <label for="mSlider">Massa (m): <span id="mValue">5</span> kg</label>
+                <input type="range" id="mSlider" min="1" max="20" value="5" step="0.5">
+            </div>
+            
+            <button id="startButton">▶️ Mulai</button>
+            <button id="resetButton">↺ Reset</button>
+        </div>
+        
+        <div class="panel simulation-area">
+            <canvas id="simCanvas" width="700" height="400"></canvas>
+            
+            <div id="energy-charts">
+                <div class="chart">
+                    <div class="bar-container">
+                        <div class="bar" id="pe-bar"></div>
+                    </div>
+                    <div class="chart-label">Energi Potensial (PE)</div>
+                    <div class="chart-value" id="pe-value">0.0 J</div>
+                </div>
+                <div class="chart">
+                    <div class="bar-container">
+                        <div class="bar" id="ke-bar"></div>
+                    </div>
+                    <div class="chart-label">Energi Kinetik (KE)</div>
+                    <div class="chart-value" id="ke-value">0.0 J</div>
+                </div>
+                <div class="chart">
+                    <div class="bar-container">
+                        <div class="bar" id="total-bar"></div>
+                    </div>
+                    <div class="chart-label">Total Energi</div>
+                    <div class="chart-value" id="total-value">0.0 J</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('simCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            const hSlider = document.getElementById('hSlider');
+            const mSlider = document.getElementById('mSlider');
+            const hValue = document.getElementById('hValue');
+            const mValue = document.getElementById('mValue');
+            const startButton = document.getElementById('startButton');
+            const resetButton = document.getElementById('resetButton');
+            
+            const peBar = document.getElementById('pe-bar');
+            const keBar = document.getElementById('ke-bar');
+            const totalBar = document.getElementById('total-bar');
+            const peValue = document.getElementById('pe-value');
+            const keValue = document.getElementById('ke-value');
+            const totalValue = document.getElementById('total-value');
+
+            const g = 9.81;
+            const PIXEL_SCALE = 20;
+            const rampStartX = 50;
+            const rampEndX = 350;
+            const groundY = 350;
+            const rampWidth = rampEndX - rampStartX;
+
+            let ball = {
+                x: rampStartX,
+                y: 0,
+                radius: 10,
+                mass: 5,
+                v: 0
+            };
+            
+            let simState = {
+                h_world: 10,
+                isRunning: false,
+                lastTime: 0,
+                rampStartY: 0,
+                rampAngle: 0
+            };
+            
+            let energy = {
+                pe: 0,
+                ke: 0,
+                total: 0
+            };
+            
+            let animationFrameId = null;
+
+            function resetSimulation() {
+                if (animationFrameId) {
+                    cancelAnimationFrame(animationFrameId);
+                    animationFrameId = null;
+                }
+                
+                simState.isRunning = false;
+                simState.lastTime = 0;
+                
+                ball.mass = parseFloat(mSlider.value);
+                simState.h_world = parseFloat(hSlider.value);
+                ball.radius = Math.max(8, Math.min(20, ball.mass * 0.8));
+                
+                hValue.textContent = simState.h_world.toFixed(1);
+                mValue.textContent = ball.mass.toFixed(1);
+                
+                const h_pixel = simState.h_world * PIXEL_SCALE;
+                simState.rampStartY = groundY - h_pixel;
+                simState.rampAngle = Math.atan2(h_pixel, rampWidth);
+                
+                ball.x = rampStartX;
+                ball.y = simState.rampStartY;
+                ball.v = 0;
+                
+                energy.pe = ball.mass * g * simState.h_world;
+                energy.ke = 0;
+                energy.total = energy.pe;
+                
+                draw();
+                updateEnergyDisplay();
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.beginPath();
+                ctx.moveTo(rampStartX, simState.rampStartY);
+                ctx.lineTo(rampEndX, groundY);
+                ctx.lineTo(canvas.width - 20, groundY);
+                ctx.strokeStyle = '#333';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.arc(ball.x, ball.y - ball.radius, ball.radius, 0, Math.PI * 2);
+                ctx.fillStyle = '#007bff';
+                ctx.fill();
+                ctx.strokeStyle = '#0056b3';
+                ctx.stroke();
+            }
+
+            function updateEnergyDisplay() {
+                const maxE = energy.total || 1;
+                peBar.style.height = (energy.pe / maxE) * 100 + '%';
+                keBar.style.height = (energy.ke / maxE) * 100 + '%';
+                totalBar.style.height = '100%';
+                
+                // Tampilkan nilai angka
+                peValue.textContent = energy.pe.toFixed(1) + ' J';
+                keValue.textContent = energy.ke.toFixed(1) + ' J';
+                totalValue.textContent = energy.total.toFixed(1) + ' J';
+            }
+
+            function updatePhysics(dt) {
+                if (dt > 0.1) dt = 0.1;
+                
+                const a = g * Math.sin(simState.rampAngle);
+                ball.v += a * dt;
+                
+                const ds = ball.v * dt;
+                ball.x += ds * Math.cos(simState.rampAngle);
+                ball.y += ds * Math.sin(simState.rampAngle);
+                
+                if (ball.y >= groundY) {
+                    ball.y = groundY;
+                    ball.x = rampEndX + (ball.x - rampEndX);
+                }
+                
+                const currentH = Math.max(0, (groundY - ball.y) / PIXEL_SCALE);
+                energy.pe = ball.mass * g * currentH;
+                energy.ke = energy.total - energy.pe;
+                
+                if (ball.x > canvas.width + 50) {
+                    simState.isRunning = false;
+                }
+            }
+
+            function simulationLoop(currentTime) {
+                if (!simState.isRunning) return;
+                
+                if (simState.lastTime === 0) {
+                    simState.lastTime = currentTime;
+                }
+                const dt = (currentTime - simState.lastTime) / 1000;
+                updatePhysics(dt);
+                draw();
+                updateEnergyDisplay();
+                simState.lastTime = currentTime;
+                
+                animationFrameId = requestAnimationFrame(simulationLoop);
+            }
+
+            function startSimulation() {
+                if (simState.isRunning) return;
+                simState.isRunning = true;
+                simState.lastTime = 0;
+                animationFrameId = requestAnimationFrame(simulationLoop);
+            }
+
+            startButton.addEventListener('click', startSimulation);
+            resetButton.addEventListener('click', resetSimulation);
+            hSlider.addEventListener('input', resetSimulation);
+            mSlider.addEventListener('input', resetSimulation);
+
+            resetSimulation();
+        });
+    </script>
+</body>
+</html>
