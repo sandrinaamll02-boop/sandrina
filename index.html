@@ -25,7 +25,8 @@
             overflow: hidden;
         }
         .car {
-            font-size: 50px;
+            width: 90px; /* Ukuran logo diperkecil */
+            height: auto;
             animation: moveCar 2s infinite alternate;
             display: inline-block;
             margin-bottom: 10px;
@@ -46,6 +47,7 @@
             border-radius: 8px;
             font-size: 14px;
             outline: none;
+            box-sizing: border-box; /* Pastikan padding tidak memengaruhi lebar total */
         }
         input:focus {
             border-color: #ffeb3b;
@@ -61,6 +63,7 @@
             font-weight: bold;
             transition: 0.3s;
             width: 100%;
+            margin-top: 10px; /* Jarak kecil dari input */
         }
         button:hover {
             background-color: #0056b3;
@@ -70,10 +73,9 @@
 </head>
 <body>
     <div class="login-container">
-        <div class="car">🚗</div>
+        <img src="https://th.bing.com/th/id/OIP.zd8gHSd02qkYypVQiTMKqwHaI0?w=182&h=217&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3" alt="Logo" class="car">
         <h2>Login</h2>
         <input type="text" id="nama" placeholder="Masukkan Nama" required>
-        <br>
         <button onclick="masuk()">Masuk</button>
     </div>
 
