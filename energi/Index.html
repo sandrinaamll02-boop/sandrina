@@ -53,7 +53,7 @@
             font-weight: 600;
             margin-bottom: 5px;
         }
-        .control-group input[type="range"] {
+        .control-group input[type="range"], .control-group select {
             width: 100%;
             cursor: pointer;
         }
@@ -158,6 +158,16 @@
             <h2>Panel Kontrol</h2>
             
             <div class="control-group">
+                <label for="objectSelect">Pilih Objek: <span id="objectValue">Bola</span></label>
+                <select id="objectSelect">
+                    <option value="ball">Bola</option>
+                    <option value="car">Mobil</option>
+                    <option value="motorcycle">Motor</option>
+                    <option value="bicycle">Sepeda</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
                 <label for="hSlider">Ketinggian (h): <span id="hValue">10</span> m</label>
                 <input type="range" id="hSlider" min="1" max="15" value="10" step="0.5">
             </div>
@@ -209,6 +219,8 @@
             const mSlider = document.getElementById('mSlider');
             const hValue = document.getElementById('hValue');
             const mValue = document.getElementById('mValue');
+            const objectSelect = document.getElementById('objectSelect');
+            const objectValue = document.getElementById('objectValue');
             const startButton = document.getElementById('startButton');
             const resetButton = document.getElementById('resetButton');
             
@@ -225,13 +237,36 @@
             const rampEndX = 350;
             const groundY = 350;
             const rampWidth = rampEndX - rampStartX;
+            const IMAGE_WIDTH = 40; // Lebar gambar dalam piksel
+
+            // URL gambar untuk setiap objek (ganti dengan URL valid yang Anda sediakan)
+            const objectImages = {
+                ball: null, // Bola menggunakan rendering lingkaran
+                car: new Image(),
+                motorcycle: new Image(),
+                bicycle: new Image()
+            };
+
+            // Ganti dengan URL gambar Anda
+            objectImages.car.src = 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhs1xUImSguoMA27uMB7vWXNM7QE4sRGE3JfvV9Lgp2XIVe2xV-_Wfj3ZaDp26-7SOAj40ERmiOC30BZWEhijRa8AwTwK3Nd65OhEJvgYY-7JNBiifepvnK1XG5_mOwjE9XhodWbeQ4OBFIHAaBNaqrNp1Vz9t7_K5wUJbYQ8Y1VcjSTXakZeywqKbD1s4/s1600/gambar_mobil-removebg-preview.png';
+            objectImages.motorcycle.src = 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjLPiDc7D9JqlU387L4gZLMCJoTVvbOFG3sHV4KJ7Oybfbe92ZBaIT7nNxbHPWkAsFOWRvMonOvwnjgT0VBS9jUoEXNvMm9TdJtw9OK929foCoeZ5tw5EgQIfEbQX5KrgPmfDYWtI0jVVPC5RQ0t0ccYKzuLMUt9PPc1Cs_YVh5bVvxlyfF5vh17lfUGa8/s1600/download-removebg-preview.png';
+            objectImages.bicycle.src = 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgdFy5ad0stbvVdXX21PRL5jGyq-hxYAM-_3I5NP_AQTmwys6-WInmJqFgfw10JbfgTSqlwI0dtOPxN0caKHnnuey2Os012_PPEyLAvwkyjpybEFOEQnbeGe6Zc5tKYuqEPv2LSyYWtHdQ3ZEUqt1RxED_oG-wB-pg6lAr-tNGFSHIS86fz_mrGcXWRI98/s1600/sepedah-removebg-preview.png';
+
+            // Objek dan massa tetap
+            const objectMasses = {
+                ball: null, // Mengikuti slider
+                car: 200,
+                motorcycle: 80,
+                bicycle: 20
+            };
 
             let ball = {
                 x: rampStartX,
                 y: 0,
                 radius: 10,
                 mass: 5,
-                v: 0
+                v: 0,
+                type: 'ball'
             };
             
             let simState = {
@@ -259,9 +294,20 @@
                 simState.isRunning = false;
                 simState.lastTime = 0;
                 
-                ball.mass = parseFloat(mSlider.value);
+                ball.type = objectSelect.value;
+                objectValue.textContent = objectSelect.options[objectSelect.selectedIndex].text;
+                
+                // Set massa berdasarkan objek
+                if (ball.type === 'ball') {
+                    ball.mass = parseFloat(mSlider.value);
+                    mSlider.disabled = false;
+                } else {
+                    ball.mass = objectMasses[ball.type];
+                    mSlider.disabled = true;
+                }
+                
                 simState.h_world = parseFloat(hSlider.value);
-                ball.radius = Math.max(8, Math.min(20, ball.mass * 0.8));
+                ball.radius = ball.type === 'ball' ? Math.max(8, Math.min(20, ball.mass * 0.8)) : IMAGE_WIDTH / 2;
                 
                 hValue.textContent = simState.h_world.toFixed(1);
                 mValue.textContent = ball.mass.toFixed(1);
@@ -285,6 +331,7 @@
             function draw() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
+                // Gambar jalur
                 ctx.beginPath();
                 ctx.moveTo(rampStartX, simState.rampStartY);
                 ctx.lineTo(rampEndX, groundY);
@@ -293,12 +340,27 @@
                 ctx.lineWidth = 3;
                 ctx.stroke();
                 
-                ctx.beginPath();
-                ctx.arc(ball.x, ball.y - ball.radius, ball.radius, 0, Math.PI * 2);
-                ctx.fillStyle = '#007bff';
-                ctx.fill();
-                ctx.strokeStyle = '#0056b3';
-                ctx.stroke();
+                // Gambar objek
+                if (ball.type === 'ball') {
+                    ctx.beginPath();
+                    ctx.arc(ball.x, ball.y - ball.radius, ball.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = '#007bff';
+                    ctx.fill();
+                    ctx.strokeStyle = '#0056b3';
+                    ctx.stroke();
+                } else if (objectImages[ball.type].complete && objectImages[ball.type].naturalWidth !== 0) {
+                    const img = objectImages[ball.type];
+                    const aspectRatio = img.naturalHeight / img.naturalWidth;
+                    const imgWidth = IMAGE_WIDTH;
+                    const imgHeight = imgWidth * aspectRatio;
+                    ctx.drawImage(img, ball.x - imgWidth / 2, ball.y - imgHeight - ball.radius, imgWidth, imgHeight);
+                } else {
+                    // Fallback jika gambar gagal dimuat
+                    ctx.beginPath();
+                    ctx.arc(ball.x, ball.y - ball.radius, ball.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = '#ff0000';
+                    ctx.fill();
+                }
             }
 
             function updateEnergyDisplay() {
@@ -307,7 +369,6 @@
                 keBar.style.height = (energy.ke / maxE) * 100 + '%';
                 totalBar.style.height = '100%';
                 
-                // Tampilkan nilai angka
                 peValue.textContent = energy.pe.toFixed(1) + ' J';
                 keValue.textContent = energy.ke.toFixed(1) + ' J';
                 totalValue.textContent = energy.total.toFixed(1) + ' J';
@@ -363,8 +424,23 @@
             resetButton.addEventListener('click', resetSimulation);
             hSlider.addEventListener('input', resetSimulation);
             mSlider.addEventListener('input', resetSimulation);
+            objectSelect.addEventListener('change', resetSimulation);
 
-            resetSimulation();
+            // Muat gambar dan reset simulasi
+            Promise.all([
+                new Promise(resolve => {
+                    if (objectImages.car.src) objectImages.car.onload = resolve;
+                    else resolve();
+                }),
+                new Promise(resolve => {
+                    if (objectImages.motorcycle.src) objectImages.motorcycle.onload = resolve;
+                    else resolve();
+                }),
+                new Promise(resolve => {
+                    if (objectImages.bicycle.src) objectImages.bicycle.onload = resolve;
+                    else resolve();
+                })
+            ]).then(resetSimulation);
         });
     </script>
 </body>
