@@ -6,83 +6,134 @@
     <title>Simulasi Usaha dan Energi</title>
     
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f0f2f5;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #f0f2f5 0%, #e6ecef 100%);
             color: #333;
             line-height: 1.6;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            padding: 30px;
             margin: 0;
+            min-height: 100vh;
         }
+
         h1 {
-            color: #0056b3;
-            margin-bottom: 20px;
+            color: #007bff;
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0, 123, 255, 0.1);
         }
+
         .container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             width: 100%;
             max-width: 1200px;
-            gap: 20px;
+            gap: 25px;
         }
+
         .panel {
             background: #ffffff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        
+
+        .panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
         .controls {
             flex-basis: 300px;
             flex-grow: 1;
+            background: linear-gradient(to bottom, #ffffff, #f8f9fa);
         }
+
         .controls h2 {
             margin-top: 0;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 12px;
+            color: #333;
+            font-weight: 600;
+            font-size: 1.5rem;
         }
+
         .control-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
+
         .control-group label {
             display: block;
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            color: #333;
         }
-        .control-group input[type="range"], .control-group select {
+
+        .control-group input[type="range"],
+        .control-group select {
             width: 100%;
             cursor: pointer;
+            accent-color: #007bff;
+            background: #e9ecef;
+            border-radius: 5px;
+            padding: 5px;
         }
+
+        .control-group select {
+            padding: 8px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .control-group select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+        }
+
         .control-group span {
-            font-family: monospace;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             font-size: 1.1em;
-            color: #0056b3;
-            font-weight: bold;
+            color: #007bff;
+            font-weight: 700;
         }
+
         button {
             background-color: #007bff;
             color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
+            padding: 12px 24px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 1em;
+            font-size: 1rem;
             font-weight: 600;
             margin-right: 10px;
-            transition: background-color 0.2s;
+            transition: background-color 0.3s ease, transform 0.2s ease;
         }
+
         button:hover {
             background-color: #0056b3;
+            transform: translateY(-2px);
         }
+
         button#resetButton {
-            background-color: #6c757d;
+            background-color: #ffeb3b;
+            color: #333;
         }
+
         button#resetButton:hover {
-            background-color: #5a6268;
+            background-color: #ffd700;
+            transform: translateY(-2px);
         }
 
         .simulation-area {
@@ -90,62 +141,80 @@
             flex-grow: 2;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
         }
+
         canvas {
-            background: #fdfdfd;
-            border: 1px solid #ddd;
+            background: #ffffff;
+            border: 1px solid #ced4da;
             width: 100%;
-            border-radius: 4px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
 
         #energy-charts {
             display: flex;
             justify-content: space-around;
-            height: 180px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            background: #fdfdfd;
+            height: 200px;
+            padding: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
+
         .chart {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 30%;
         }
+
         .bar-container {
-            width: 60px;
-            height: 100px;
-            background: #eee;
-            border: 1px solid #ccc;
+            width: 70px;
+            height: 120px;
+            background: #e9ecef;
+            border: 1px solid #ced4da;
             position: relative;
             overflow: hidden;
-            border-radius: 3px;
+            border-radius: 5px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
         }
+
         .bar {
             width: 100%;
             position: absolute;
             bottom: 0;
             left: 0;
-            transition: height 0.1s linear;
+            transition: height 0.2s ease;
         }
-        #pe-bar { background-color: #4CAF50; }
-        #ke-bar { background-color: #f44336; }
-        #total-bar { background-color: #2196F3; }
-        
+
+        #pe-bar {
+            background-color: #28a745;
+        }
+
+        #ke-bar {
+            background-color: #dc3545;
+        }
+
+        #total-bar {
+            background-color: #007bff;
+        }
+
         .chart-label {
-            font-size: 0.9em;
+            font-size: 0.95em;
             font-weight: 500;
-            margin-top: 5px;
+            margin-top: 8px;
             text-align: center;
+            color: #333;
         }
+
         .chart-value {
             font-size: 1.1em;
-            font-weight: bold;
-            margin-top: 4px;
+            font-weight: 700;
+            margin-top: 6px;
             color: #333;
-            font-family: 'Courier New', monospace;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
     </style>
 </head>
