@@ -189,17 +189,9 @@
             transition: height 0.2s ease;
         }
 
-        #pe-bar {
-            background-color: #28a745;
-        }
-
-        #ke-bar {
-            background-color: #dc3545;
-        }
-
-        #total-bar {
-            background-color: #007bff;
-        }
+        #pe-bar { background-color: #28a745; }
+        #ke-bar { background-color: #dc3545; }
+        #total-bar { background-color: #007bff; }
 
         .chart-label {
             font-size: 0.95em;
@@ -255,23 +247,17 @@
             
             <div id="energy-charts">
                 <div class="chart">
-                    <div class="bar-container">
-                        <div class="bar" id="pe-bar"></div>
-                    </div>
+                    <div class="bar-container"><div class="bar" id="pe-bar"></div></div>
                     <div class="chart-label">Energi Potensial (PE)</div>
                     <div class="chart-value" id="pe-value">0.0 J</div>
                 </div>
                 <div class="chart">
-                    <div class="bar-container">
-                        <div class="bar" id="ke-bar"></div>
-                    </div>
+                    <div class="bar-container"><div class="bar" id="ke-bar"></div></div>
                     <div class="chart-label">Energi Kinetik (KE)</div>
                     <div class="chart-value" id="ke-value">0.0 J</div>
                 </div>
                 <div class="chart">
-                    <div class="bar-container">
-                        <div class="bar" id="total-bar"></div>
-                    </div>
+                    <div class="bar-container"><div class="bar" id="total-bar"></div></div>
                     <div class="chart-label">Total Energi</div>
                     <div class="chart-value" id="total-value">0.0 J</div>
                 </div>
@@ -281,9 +267,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Elemen DOM
             const canvas = document.getElementById('simCanvas');
             const ctx = canvas.getContext('2d');
-            
             const hSlider = document.getElementById('hSlider');
             const mSlider = document.getElementById('mSlider');
             const hValue = document.getElementById('hValue');
@@ -292,7 +278,6 @@
             const objectValue = document.getElementById('objectValue');
             const startButton = document.getElementById('startButton');
             const resetButton = document.getElementById('resetButton');
-            
             const peBar = document.getElementById('pe-bar');
             const keBar = document.getElementById('ke-bar');
             const totalBar = document.getElementById('total-bar');
@@ -300,6 +285,7 @@
             const keValue = document.getElementById('ke-value');
             const totalValue = document.getElementById('total-value');
 
+            // Konstanta fisika dan skala
             const g = 9.81;
             const PIXEL_SCALE = 20;
             const rampStartX = 50;
@@ -308,7 +294,15 @@
             const rampWidth = rampEndX - rampStartX;
             const IMAGE_WIDTH = 40;
 
-            // Muat gambar latar belakang
+            // Rentang massa per objek
+            const massRanges = {
+                ball: { min: 1, max: 20, default: 5, step: 0.5 },
+                car: { min: 100, max: 300, default: 200, step: 1 },
+                motorcycle: { min: 80, max: 100, default: 90, step: 1 },
+                bicycle: { min: 20, max: 40, default: 30, step: 1 }
+            };
+
+            // Gambar
             const backgroundImage = new Image();
             backgroundImage.src = 'https://blogger.googleusercontent.com/img/a/AVvXsEhEoCBc6nBqPgX_2C2P-J7x1PgPbxjDm9iyyjLWcsqx2zI1aM0iQ9UsBJ01lwcVh6mN8T8_DsXq9GUXpUzXolCpIUx3FBWJS2EW8ao9mYXt2AoLyA-A3MeGBz7C79xnDiVOSAbtA4XGUEfUJQOIXj7K3cJHtawVUaNjtwNiQEojLptk5zxUBChPz51_Vlw';
 
@@ -318,98 +312,80 @@
                 motorcycle: new Image(),
                 bicycle: new Image()
             };
-
             objectImages.car.src = 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhs1xUImSguoMA27uMB7vWXNM7QE4sRGE3JfvV9Lgp2XIVe2xV-_Wfj3ZaDp26-7SOAj40ERmiOC30BZWEhijRa8AwTwK3Nd65OhEJvgYY-7JNBiifepvnK1XG5_mOwjE9XhodWbeQ4OBFIHAaBNaqrNp1Vz9t7_K5wUJbYQ8Y1VcjSTXakZeywqKbD1s4/s1600/gambar_mobil-removebg-preview.png';
             objectImages.motorcycle.src = 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjLPiDc7D9JqlU387L4gZLMCJoTVvbOFG3sHV4KJ7Oybfbe92ZBaIT7nNxbHPWkAsFOWRvMonOvwnjgT0VBS9jUoEXNvMm9TdJtw9OK929foCoeZ5tw5EgQIfEbQX5KrgPmfDYWtI0jVVPC5RQ0t0ccYKzuLMUt9PPc1Cs_YVh5bVvxlyfF5vh17lfUGa8/s1600/download-removebg-preview.png';
             objectImages.bicycle.src = 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgdFy5ad0stbvVdXX21PRL5jGyq-hxYAM-_3I5NP_AQTmwys6-WInmJqFgfw10JbfgTSqlwI0dtOPxN0caKHnnuey2Os012_PPEyLAvwkyjpybEFOEQnbeGe6Zc5tKYuqEPv2LSyYWtHdQ3ZEUqt1RxED_oG-wB-pg6lAr-tNGFSHIS86fz_mrGcXWRI98/s1600/sepedah-removebg-preview.png';
 
-            const objectMasses = {
-                ball: null,
-                car: 200,
-                motorcycle: 80,
-                bicycle: 20
-            };
-
-            let ball = {
-                x: rampStartX,
-                y: 0,
-                radius: 10,
-                mass: 5,
-                v: 0,
-                type: 'ball'
-            };
-            
-            let simState = {
-                h_world: 10,
-                isRunning: false,
-                lastTime: 0,
-                rampStartY: 0,
-                rampAngle: 0
-            };
-            
-            let energy = {
-                pe: 0,
-                ke: 0,
-                total: 0
-            };
-            
+            // State simulasi
+            let ball = { x: rampStartX, y: 0, radius: 10, mass: 5, v: 0, type: 'ball' };
+            let simState = { h_world: 10, isRunning: false, lastTime: 0, rampStartY: 0, rampAngle: 0 };
+            let energy = { pe: 0, ke: 0, total: 0 };
             let animationFrameId = null;
 
-            function resetSimulation() {
-                if (animationFrameId) {
-                    cancelAnimationFrame(animationFrameId);
-                    animationFrameId = null;
-                }
+            // Fungsi: Atur slider massa sesuai objek
+            function updateMassSlider() {
+                const type = objectSelect.value;
+                const range = massRanges[type];
                 
+                // Atur atribut slider
+                mSlider.min = range.min;
+                mSlider.max = range.max;
+                mSlider.step = range.step;
+                
+                // Pastikan nilai dalam rentang
+                const currentVal = parseFloat(mSlider.value);
+                const clampedVal = Math.max(range.min, Math.min(range.max, currentVal));
+                mSlider.value = clampedVal === currentVal ? currentVal : range.default;
+                
+                ball.mass = parseFloat(mSlider.value);
+                mValue.textContent = ball.mass.toFixed(1);
+            }
+
+            // Reset simulasi
+            function resetSimulation() {
+                if (animationFrameId) cancelAnimationFrame(animationFrameId);
                 simState.isRunning = false;
                 simState.lastTime = 0;
-                
+
                 ball.type = objectSelect.value;
                 objectValue.textContent = objectSelect.options[objectSelect.selectedIndex].text;
-                
-                if (ball.type === 'ball') {
-                    ball.mass = parseFloat(mSlider.value);
-                    mSlider.disabled = false;
-                } else {
-                    ball.mass = objectMasses[ball.type];
-                    mSlider.disabled = true;
-                }
-                
+
+                updateMassSlider(); // Atur slider & massa
+
                 simState.h_world = parseFloat(hSlider.value);
-                ball.radius = ball.type === 'ball' ? Math.max(8, Math.min(20, ball.mass * 0.8)) : IMAGE_WIDTH / 2;
-                
                 hValue.textContent = simState.h_world.toFixed(1);
-                mValue.textContent = ball.mass.toFixed(1);
-                
+
+                ball.radius = ball.type === 'ball' 
+                    ? Math.max(8, Math.min(20, ball.mass * 0.8)) 
+                    : IMAGE_WIDTH / 2;
+
                 const h_pixel = simState.h_world * PIXEL_SCALE;
                 simState.rampStartY = groundY - h_pixel;
                 simState.rampAngle = Math.atan2(h_pixel, rampWidth);
-                
+
                 ball.x = rampStartX;
                 ball.y = simState.rampStartY;
                 ball.v = 0;
-                
+
                 energy.pe = ball.mass * g * simState.h_world;
                 energy.ke = 0;
                 energy.total = energy.pe;
-                
+
                 draw();
                 updateEnergyDisplay();
             }
 
+            // Gambar
             function draw() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
-                // Gambar latar belakang
-                if (backgroundImage.complete && backgroundImage.naturalWidth !== 0) {
+                if (backgroundImage.complete && backgroundImage.naturalWidth) {
                     ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
                 } else {
-                    // Fallback jika gambar latar belakang gagal dimuat
                     ctx.fillStyle = '#fdfdfd';
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
                 }
-                
-                // Gambar jalur
+
                 ctx.beginPath();
                 ctx.moveTo(rampStartX, simState.rampStartY);
                 ctx.lineTo(rampEndX, groundY);
@@ -417,8 +393,7 @@
                 ctx.strokeStyle = '#333';
                 ctx.lineWidth = 3;
                 ctx.stroke();
-                
-                // Gambar objek
+
                 if (ball.type === 'ball') {
                     ctx.beginPath();
                     ctx.arc(ball.x, ball.y - ball.radius, ball.radius, 0, Math.PI * 2);
@@ -426,7 +401,7 @@
                     ctx.fill();
                     ctx.strokeStyle = '#0056b3';
                     ctx.stroke();
-                } else if (objectImages[ball.type].complete && objectImages[ball.type].naturalWidth !== 0) {
+                } else if (objectImages[ball.type].complete && objectImages[ball.type].naturalWidth) {
                     const img = objectImages[ball.type];
                     const aspectRatio = img.naturalHeight / img.naturalWidth;
                     const imgWidth = IMAGE_WIDTH;
@@ -440,56 +415,51 @@
                 }
             }
 
+            // Update energi
             function updateEnergyDisplay() {
                 const maxE = energy.total || 1;
-                peBar.style.height = (energy.pe / maxE) * 100 + '%';
-                keBar.style.height = (energy.ke / maxE) * 100 + '%';
+                peBar.style.height = (energy.pe / maxE * 100) + '%';
+                keBar.style.height = (energy.ke / maxE * 100) + '%';
                 totalBar.style.height = '100%';
-                
                 peValue.textContent = energy.pe.toFixed(1) + ' J';
                 keValue.textContent = energy.ke.toFixed(1) + ' J';
                 totalValue.textContent = energy.total.toFixed(1) + ' J';
             }
 
+            // Fisika
             function updatePhysics(dt) {
                 if (dt > 0.1) dt = 0.1;
-                
                 const a = g * Math.sin(simState.rampAngle);
                 ball.v += a * dt;
-                
                 const ds = ball.v * dt;
                 ball.x += ds * Math.cos(simState.rampAngle);
                 ball.y += ds * Math.sin(simState.rampAngle);
-                
+
                 if (ball.y >= groundY) {
                     ball.y = groundY;
                     ball.x = rampEndX + (ball.x - rampEndX);
                 }
-                
-                // Hentikan objek saat mencapai ujung lintasan (canvas.width - 50)
+
                 if (ball.x >= canvas.width - 50) {
-                    ball.x = canvas.width - 50; // Tahan posisi di ujung
-                    ball.v = 0; // Hentikan kecepatan
-                    simState.isRunning = false; // Hentikan simulasi
+                    ball.x = canvas.width - 50;
+                    ball.v = 0;
+                    simState.isRunning = false;
                 }
-                
+
                 const currentH = Math.max(0, (groundY - ball.y) / PIXEL_SCALE);
                 energy.pe = ball.mass * g * currentH;
                 energy.ke = energy.total - energy.pe;
             }
 
+            // Loop animasi
             function simulationLoop(currentTime) {
                 if (!simState.isRunning) return;
-                
-                if (simState.lastTime === 0) {
-                    simState.lastTime = currentTime;
-                }
+                if (!simState.lastTime) simState.lastTime = currentTime;
                 const dt = (currentTime - simState.lastTime) / 1000;
                 updatePhysics(dt);
                 draw();
                 updateEnergyDisplay();
                 simState.lastTime = currentTime;
-                
                 animationFrameId = requestAnimationFrame(simulationLoop);
             }
 
@@ -500,31 +470,35 @@
                 animationFrameId = requestAnimationFrame(simulationLoop);
             }
 
+            // Event Listeners
             startButton.addEventListener('click', startSimulation);
             resetButton.addEventListener('click', resetSimulation);
-            hSlider.addEventListener('input', resetSimulation);
-            mSlider.addEventListener('input', resetSimulation);
-            objectSelect.addEventListener('change', resetSimulation);
 
-            // Muat gambar dan reset simulasi
+            hSlider.addEventListener('input', () => {
+                simState.h_world = parseFloat(hSlider.value);
+                hValue.textContent = simState.h_world.toFixed(1);
+                resetSimulation();
+            });
+
+            mSlider.addEventListener('input', () => {
+                ball.mass = parseFloat(mSlider.value);
+                mValue.textContent = ball.mass.toFixed(1);
+                resetSimulation();
+            });
+
+            objectSelect.addEventListener('change', () => {
+                resetSimulation();
+            });
+
+            // Inisialisasi
             Promise.all([
-                new Promise(resolve => {
-                    if (backgroundImage.src) backgroundImage.onload = resolve;
-                    else resolve();
-                }),
-                new Promise(resolve => {
-                    if (objectImages.car.src) objectImages.car.onload = resolve;
-                    else resolve();
-                }),
-                new Promise(resolve => {
-                    if (objectImages.motorcycle.src) objectImages.motorcycle.onload = resolve;
-                    else resolve();
-                }),
-                new Promise(resolve => {
-                    if (objectImages.bicycle.src) objectImages.bicycle.onload = resolve;
-                    else resolve();
-                })
-            ]).then(resetSimulation);
+                new Promise(r => backgroundImage.onload = r),
+                new Promise(r => objectImages.car.onload = r),
+                new Promise(r => objectImages.motorcycle.onload = r),
+                new Promise(r => objectImages.bicycle.onload = r)
+            ]).catch(() => {}).finally(() => {
+                resetSimulation();
+            });
         });
     </script>
 </body>
