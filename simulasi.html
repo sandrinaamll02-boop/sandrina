@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulasi - Usaha dan Energi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            line-height: 1.6;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .content {
+            background-color: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        h2 {
+            color: #007bff;
+            margin-top: 0;
+        }
+        ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        .action-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .action-buttons button {
+            padding: 12px 24px;
+            margin: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+        }
+        .action-buttons button:hover {
+            background-color: #218838;
+        }
+        .back-btn {
+            background-color: #17a2b8;
+        }
+        .back-btn:hover {
+            background-color: #138496;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Simulasi Fisika</h1>
+        <span id="greeting">Hai, </span>
+    </div>
+
+    <div class="content">
+        <h2>Simulasi Usaha dan Energi Tanpa Gesekan</h2>
+
+        <h3>Tujuan Pembelajaran</h3>
+        <p>Setelah kegiatan ini, peserta didik diharapkan mampu:</p>
+        <ul>
+            <li>Menjelaskan konsep energi potensial gravitasi, energi kinetik, dan energi mekanik pada benda yang bergerak tanpa gesekan.</li>
+            <li>Menunjukkan hubungan konservasi energi mekanik melalui hasil simulasi.</li>
+            <li>Menafsirkan diagram batang energi (bar chart) untuk menunjukkan bahwa:<br>
+                <strong>E<sub>mekanik</sub> = E<sub>potensial</sub> + E<sub>kinetik</sub></strong>
+            </li>
+        </ul>
+
+        <p>
+            Pahami tujuan di atas sebelum mengerjakan latihan. Kamu bisa memilih jenis latihan sesuai kebutuhan:
+        </p>
+
+        <div class="action-buttons">
+            <button onclick="window.location.href='latsol.html'">Latihan Soal Esai</button>
+            <button onclick="window.location.href='quiz.html'">Kuis Pilihan Ganda</button>
+            <button class="back-btn" onclick="window.location.href='home.html'">Kembali ke Home</button>
+        </div>
+    </div>
+
+    <script>
+        const nama = localStorage.getItem('namaPengguna');
+        if (nama) {
+            document.getElementById('greeting').textContent = `Hai, ${nama}`;
+        } else {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
