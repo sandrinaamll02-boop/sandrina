@@ -501,5 +501,41 @@
             });
         });
     </script>
+    <!-- Form Jawaban Siswa -->
+<div class="panel" style="width: 100%; max-width: 1200px; margin-top: 30px; padding: 25px;">
+    <h2>Jawaban Siswa</h2>
+    <textarea id="studentAnswer" rows="6" style="width: 100%; padding: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; border: 1px solid #ced4da; border-radius: 8px; resize: vertical;" placeholder="Jelaskan pengaruh perubahan massa dan ketinggian terhadap energi potensial dan energi kinetik berdasarkan simulasi yang telah kamu amati..."></textarea>
+    <br><br>
+    <button id="submitAnswer" style="background-color: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: background-color 0.3s ease;">
+        Kirim Jawaban
+    </button>
+
+    <div id="teacherAnswer" style="display: none; margin-top: 25px; padding: 20px; background: #f8f9fa; border-left: 4px solid #007bff; border-radius: 8px;">
+        <h3 style="margin-top: 0; color: #007bff;">Kesimpulan Simulasi Usaha dan Energi</h3>
+        <p style="line-height: 1.7;">
+            Melalui simulasi usaha dan energi, dapat disimpulkan bahwa energi potensial suatu benda bergantung pada massa dan ketinggiannya yang dirumuskan dengan Ep = m·g·h. Semakin besar massa benda atau semakin tinggi posisi benda, maka semakin besar pula energi potensial yang dimilikinya.
+        </p>
+        <p style="line-height: 1.7;">
+            Ketika benda bergerak turun dari ketinggian, energi potensial tersebut berubah menjadi energi kinetik. Akibatnya, semakin tinggi posisi awal benda, maka semakin besar energi kinetik yang diperoleh sehingga benda akan bergerak lebih cepat saat mendekati tanah. Hal ini sesuai dengan teori kekekalan energi, yaitu energi tidak hilang, melainkan berubah bentuk dari energi potensial menjadi energi kinetik.
+        </p>
+        <p style="line-height: 1.7;">
+            Selain itu, meskipun dua benda jatuh dari ketinggian yang sama, benda yang memiliki massa lebih besar akan memiliki energi potensial dan energi kinetik yang lebih besar. Namun, percepatannya tetap sama karena percepatan gravitasi tidak dipengaruhi massa. Yang membedakan adalah gaya dan energi yang bekerja pada setiap benda.
+        </p>
+        <p style="line-height: 1.7;">
+            Dengan demikian, simulasi ini memperkuat konsep bahwa usaha yang dilakukan oleh gaya gravitasi pada benda menyebabkan perubahan energi, dan hubungan antara ketinggian, massa, energi potensial, serta energi kinetik dapat diamati secara jelas melalui pergerakan benda dalam simulasi tersebut.
+        </p>
+    </div>
+</div>
+
+<script>
+    document.getElementById('submitAnswer').addEventListener('click', function() {
+        const studentText = document.getElementById('studentAnswer').value.trim();
+        if (studentText === '') {
+            alert('Silakan tulis jawabanmu terlebih dahulu!');
+            return;
+        }
+        document.getElementById('teacherAnswer').style.display = 'block';
+    });
+</script>
 </body>
 </html>
