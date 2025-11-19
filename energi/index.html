@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulasi Usaha dan Energi</title>
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
+    <!-- Gunakan Comic Neue dari Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
         body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-family: 'Comic Neue', cursive;
             background: linear-gradient(135deg, #f0f2f5 0%, #e6ecef 100%);
             color: #333;
             line-height: 1.6;
@@ -62,7 +65,7 @@
             border-bottom: 2px solid #007bff;
             padding-bottom: 12px;
             color: #333;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1.5rem;
         }
 
@@ -72,7 +75,7 @@
 
         .control-group label {
             display: block;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 8px;
             color: #333;
         }
@@ -102,10 +105,9 @@
         }
 
         .control-group span {
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
             font-size: 1.1em;
             color: #007bff;
-            font-weight: 700;
         }
 
         button {
@@ -116,7 +118,7 @@
             border-radius: 8px;
             cursor: pointer;
             font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             margin-right: 10px;
             transition: background-color 0.3s ease, transform 0.2s ease;
         }
@@ -195,7 +197,7 @@
 
         .chart-label {
             font-size: 0.95em;
-            font-weight: 500;
+            font-weight: 700;
             margin-top: 8px;
             text-align: center;
             color: #333;
@@ -206,7 +208,35 @@
             font-weight: 700;
             margin-top: 6px;
             color: #333;
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            /* Tetap gunakan Comic Neue agar konsisten */
+        }
+
+        /* Form Jawaban Siswa */
+        #studentAnswer {
+            width: 100%;
+            padding: 12px;
+            font-family: 'Comic Neue', cursive;
+            font-size: 1rem;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            resize: vertical;
+        }
+
+        #submitAnswer {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            transition: background-color 0.3s ease;
+        }
+
+        #submitAnswer:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
         }
     </style>
 </head>
@@ -322,26 +352,19 @@
             let energy = { pe: 0, ke: 0, total: 0 };
             let animationFrameId = null;
 
-            // Fungsi: Atur slider massa sesuai objek
             function updateMassSlider() {
                 const type = objectSelect.value;
                 const range = massRanges[type];
-                
-                // Atur atribut slider
                 mSlider.min = range.min;
                 mSlider.max = range.max;
                 mSlider.step = range.step;
-                
-                // Pastikan nilai dalam rentang
                 const currentVal = parseFloat(mSlider.value);
                 const clampedVal = Math.max(range.min, Math.min(range.max, currentVal));
                 mSlider.value = clampedVal === currentVal ? currentVal : range.default;
-                
                 ball.mass = parseFloat(mSlider.value);
                 mValue.textContent = ball.mass.toFixed(1);
             }
 
-            // Reset simulasi
             function resetSimulation() {
                 if (animationFrameId) cancelAnimationFrame(animationFrameId);
                 simState.isRunning = false;
@@ -350,7 +373,7 @@
                 ball.type = objectSelect.value;
                 objectValue.textContent = objectSelect.options[objectSelect.selectedIndex].text;
 
-                updateMassSlider(); // Atur slider & massa
+                updateMassSlider();
 
                 simState.h_world = parseFloat(hSlider.value);
                 hValue.textContent = simState.h_world.toFixed(1);
@@ -375,7 +398,6 @@
                 updateEnergyDisplay();
             }
 
-            // Gambar
             function draw() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 
@@ -415,7 +437,6 @@
                 }
             }
 
-            // Update energi
             function updateEnergyDisplay() {
                 const maxE = energy.total || 1;
                 peBar.style.height = (energy.pe / maxE * 100) + '%';
@@ -426,7 +447,6 @@
                 totalValue.textContent = energy.total.toFixed(1) + ' J';
             }
 
-            // Fisika
             function updatePhysics(dt) {
                 if (dt > 0.1) dt = 0.1;
                 const a = g * Math.sin(simState.rampAngle);
@@ -451,7 +471,6 @@
                 energy.ke = energy.total - energy.pe;
             }
 
-            // Loop animasi
             function simulationLoop(currentTime) {
                 if (!simState.isRunning) return;
                 if (!simState.lastTime) simState.lastTime = currentTime;
@@ -470,7 +489,6 @@
                 animationFrameId = requestAnimationFrame(simulationLoop);
             }
 
-            // Event Listeners
             startButton.addEventListener('click', startSimulation);
             resetButton.addEventListener('click', resetSimulation);
 
@@ -490,7 +508,6 @@
                 resetSimulation();
             });
 
-            // Inisialisasi
             Promise.all([
                 new Promise(r => backgroundImage.onload = r),
                 new Promise(r => objectImages.car.onload = r),
@@ -501,46 +518,45 @@
             });
         });
     </script>
-    <!-- Form Jawaban Siswa -->
-<div class="panel" style="width: 100%; max-width: 1200px; margin-top: 30px; padding: 25px;">
-    <h2>Jawaban Siswa</h2>
-    <textarea id="studentAnswer" rows="6" style="width: 100%; padding: 12px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1rem; border: 1px solid #ced4da; border-radius: 8px; resize: vertical;" placeholder="Jelaskan pengaruh perubahan massa dan ketinggian terhadap energi potensial dan energi kinetik berdasarkan simulasi yang telah kamu amati..."></textarea>
-    <br><br>
-    <div style="text-align: center;">
-        <button id="submitAnswer" style="background-color: #28a745; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: 600; transition: background-color 0.3s ease;">
-        Kirim Jawaban
-    </div>
-    </button>
 
-    <div id="teacherAnswer" style="display: none; margin-top: 25px; padding: 20px; background: #f8f9fa; border-left: 4px solid #007bff; border-radius: 8px;">
-        <h3 style="margin-top: 0; color: #007bff;">Kesimpulan Simulasi Usaha dan Energi</h3>
-        <p style="line-height: 1.7;">
-            Melalui simulasi usaha dan energi, dapat disimpulkan bahwa energi potensial suatu benda bergantung pada massa dan ketinggiannya yang dirumuskan dengan Ep = m·g·h. Semakin besar massa benda atau semakin tinggi posisi benda, maka semakin besar pula energi potensial yang dimilikinya.
-        </p>
-        <p style="line-height: 1.7;">
-            Ketika benda bergerak turun dari ketinggian, energi potensial tersebut berubah menjadi energi kinetik. Akibatnya, semakin tinggi posisi awal benda, maka semakin besar energi kinetik yang diperoleh sehingga benda akan bergerak lebih cepat saat mendekati tanah. Hal ini sesuai dengan teori kekekalan energi, yaitu energi tidak hilang, melainkan berubah bentuk dari energi potensial menjadi energi kinetik.
-        </p>
-        <p style="line-height: 1.7;">
-            Selain itu, meskipun dua benda jatuh dari ketinggian yang sama, benda yang memiliki massa lebih besar akan memiliki energi potensial dan energi kinetik yang lebih besar. Namun, percepatannya tetap sama karena percepatan gravitasi tidak dipengaruhi massa. Yang membedakan adalah gaya dan energi yang bekerja pada setiap benda.
-        </p>
-        <p style="line-height: 1.7;">
-            Dengan demikian, simulasi ini memperkuat konsep bahwa usaha yang dilakukan oleh gaya gravitasi pada benda menyebabkan perubahan energi, dan hubungan antara ketinggian, massa, energi potensial, serta energi kinetik dapat diamati secara jelas melalui pergerakan benda dalam simulasi tersebut.
-        </p>
+    <!-- Form Jawaban Siswa -->
+    <div class="panel" style="width: 100%; max-width: 1200px; margin-top: 30px; padding: 25px;">
+        <h2>Jawaban Siswa</h2>
+        <textarea id="studentAnswer" rows="6" placeholder="Jelaskan pengaruh perubahan massa dan ketinggian terhadap energi potensial dan energi kinetik berdasarkan simulasi yang telah kamu amati..."></textarea>
+        <br><br>
         <div style="text-align: center;">
-            <button onclick="window.location.href='../simulasi.html'">Latihan Soal dan Kuis</button>
+            <button id="submitAnswer">Kirim Jawaban</button>
+        </div>
+
+        <div id="teacherAnswer" style="display: none; margin-top: 25px; padding: 20px; background: #f8f9fa; border-left: 4px solid #007bff; border-radius: 8px;">
+            <h3 style="margin-top: 0; color: #007bff;">Kesimpulan Simulasi Usaha dan Energi</h3>
+            <p style="line-height: 1.7;">
+                Melalui simulasi usaha dan energi, dapat disimpulkan bahwa energi potensial suatu benda bergantung pada massa dan ketinggiannya yang dirumuskan dengan Ep = m·g·h. Semakin besar massa benda atau semakin tinggi posisi benda, maka semakin besar pula energi potensial yang dimilikinya.
+            </p>
+            <p style="line-height: 1.7;">
+                Ketika benda bergerak turun dari ketinggian, energi potensial tersebut berubah menjadi energi kinetik. Akibatnya, semakin tinggi posisi awal benda, maka semakin besar energi kinetik yang diperoleh sehingga benda akan bergerak lebih cepat saat mendekati tanah. Hal ini sesuai dengan teori kekekalan energi, yaitu energi tidak hilang, melainkan berubah bentuk dari energi potensial menjadi energi kinetik.
+            </p>
+            <p style="line-height: 1.7;">
+                Selain itu, meskipun dua benda jatuh dari ketinggian yang sama, benda yang memiliki massa lebih besar akan memiliki energi potensial dan energi kinetik yang lebih besar. Namun, percepatannya tetap sama karena percepatan gravitasi tidak dipengaruhi massa. Yang membedakan adalah gaya dan energi yang bekerja pada setiap benda.
+            </p>
+            <p style="line-height: 1.7;">
+                Dengan demikian, simulasi ini memperkuat konsep bahwa usaha yang dilakukan oleh gaya gravitasi pada benda menyebabkan perubahan energi, dan hubungan antara ketinggian, massa, energi potensial, serta energi kinetik dapat diamati secara jelas melalui pergerakan benda dalam simulasi tersebut.
+            </p>
+            <div style="text-align: center;">
+                <button onclick="window.location.href='../simulasi.html'">Latihan Soal dan Kuis</button>
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    document.getElementById('submitAnswer').addEventListener('click', function() {
-        const studentText = document.getElementById('studentAnswer').value.trim();
-        if (studentText === '') {
-            alert('Silakan tulis jawabanmu terlebih dahulu!');
-            return;
-        }
-        document.getElementById('teacherAnswer').style.display = 'block';
-    });
-</script>
+    <script>
+        document.getElementById('submitAnswer').addEventListener('click', function() {
+            const studentText = document.getElementById('studentAnswer').value.trim();
+            if (studentText === '') {
+                alert('Silakan tulis jawabanmu terlebih dahulu!');
+                return;
+            }
+            document.getElementById('teacherAnswer').style.display = 'block';
+        });
+    </script>
 </body>
 </html>
