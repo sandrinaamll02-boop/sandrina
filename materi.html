@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Materi - Usaha dan Energi</title>
 
-    <!-- Gunakan Comic Neue dari Google Fonts -->
+    <!-- Comic Neue -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
             margin: 0;
             padding: 20px;
             background-color: #f0f0f0;
-            line-height: 1.7;
+            line-height: 1.65;
         }
 
         .header {
@@ -27,104 +27,125 @@
             color: white;
             padding: 15px 25px;
             border-radius: 12px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
 
-        .header h1 {
-            margin: 0;
-            font-weight: 700;
-            font-size: 1.8rem;
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
         }
 
-        .content {
+        .tab-btn {
+            padding: 12px 28px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            background-color: #e9ecef;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .tab-btn.active {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
             background-color: white;
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             max-width: 900px;
-            margin: 0 auto 30px;
+            margin: 0 auto;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         h2 {
             color: #007bff;
-            border-bottom: 3px solid #007bff;
-            padding-bottom: 10px;
-            margin-top: 25px;
-            font-weight: 700;
-            font-size: 1.6rem;
-            text-align: center;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 8px;
+            margin-top: 0;
+            font-size: 1.5rem;
         }
 
         h3 {
             color: #0056b3;
             margin-top: 22px;
-            font-weight: 700;
             font-size: 1.3rem;
         }
 
         h4 {
             color: #007bff;
             margin-top: 18px;
-            font-weight: 700;
             font-size: 1.15rem;
-        }
-
-        p, li {
-            margin-bottom: 14px;
-            font-size: 1.05rem;
-        }
-
-        ul {
-            margin-left: 25px;
-            margin-top: 8px;
-        }
-
-        .illustration {
-            text-align: center;
-            margin: 25px 0;
-        }
-
-        .illustration img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
         }
 
         .formula {
             background-color: #e9f0ff;
-            padding: 14px;
+            padding: 12px;
             border-left: 5px solid #007bff;
-            margin: 18px 0;
-            font-family: 'Comic Neue', cursive;
-            font-size: 1.2rem;
+            margin: 16px 0;
             font-weight: 700;
-            color: #0056b3;
             border-radius: 0 8px 8px 0;
+            font-size: 1.2rem;
         }
 
         .example-table {
             width: 100%;
             border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 1rem;
+            margin: 25px 0;
+            table-layout: fixed;
         }
-        .example-table th,
         .example-table td {
-            border: 1px solid #ccc;
-            padding: 12px;
+            border: 2px solid #007bff;
+            padding: 15px;
             text-align: center;
+            vertical-align: top;
+            background-color: #f8fbff;
         }
-        .example-table th {
-            background-color: #e9f0ff;
-            color: #0056b3;
+
+        .example-cell img {
+            width: 100%;
+            max-height: 140px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .example-label {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 8px;
+            color: #d32f2f;
+        }
+        .example-label.ada {
+            color: #2e7d32;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-top: 8px;
+            margin-bottom: 16px;
+        }
+
+        p {
+            margin-bottom: 14px;
+            font-size: 1.05rem;
         }
 
         .back-btn {
             display: block;
             width: 180px;
-            margin: 20px auto;
+            margin: 25px auto;
             padding: 14px;
             background-color: #17a2b8;
             color: white;
@@ -135,7 +156,6 @@
             font-weight: 700;
             font-family: 'Comic Neue', cursive;
             text-align: center;
-            text-decoration: none;
             transition: all 0.25s ease;
         }
 
@@ -152,14 +172,17 @@
         <span id="greeting">Hai, </span>
     </div>
 
-    <div class="content">
-        <h2>PEMBAHARUAN MATERI: USAHA & ENERGI</h2>
+    <!-- Tab Navigation -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('usaha')">USAHA</button>
+        <button class="tab-btn" onclick="showTab('energi')">ENERGI</button>
+    </div>
 
-        <!-- BAGIAN USAHA -->
-        <h3>🔹 USAHA</h3>
+    <!-- USAHA Content -->
+    <div id="usaha" class="tab-content active">
+        <h2>USAHA</h2>
         <p>
-            Usaha adalah energi yang digunakan untuk menggerakkan suatu benda. Dengan kata lain, usaha adalah seberapa banyak dorongan atau tarikan yang benar-benar membuat suatu benda bergerak.
-            Jadi, apabila kita mendorong benda tetapi benda tidak bergerak, maka tidak ada usaha yang dilakukan.
+            Usaha adalah energi yang digunakan untuk menggerakkan suatu benda. Dengan kata lain, usaha adalah seberapa banyak dorongan atau tarikan yang benar-benar membuat suatu benda bergerak. Jadi, apabila kita mendorong benda tetapi benda tidak bergerak, maka tidak ada usaha yang dilakukan.
         </p>
         <div class="formula">W = F · s</div>
         <p><strong>Keterangan:</strong></p>
@@ -169,114 +192,176 @@
             <li><strong>s</strong> = Perpindahan benda (meter)</li>
         </ul>
         <p>
-            Ada dua hal yang perlu diperhatikan dalam rumus usaha, yakni: gaya dan perpindahan.
-            Sebab, jika kamu mendorong meja sekuat tenaga (melakukan gaya) tetapi meja itu tidak berpindah sama sekali (tidak ada perpindahan),
-            maka secara fisika hal tersebut tidak melakukan usaha meskipun tubuhmu merasa capek dan lelah.
+            Ada dua hal yang perlu diperhatikan dalam rumus usaha, yakni: gaya dan perpindahan. Sebab, jika kamu mendorong meja sekuat tenaga (melakukan gaya) tetapi meja itu tidak berpindah sama sekali (tidak ada perpindahan), maka secara fisika hal tersebut tidak melakukan usaha meskipun tubuhmu merasa capek dan lelah.
         </p>
 
-        <h4>Contoh Situasi Usaha</h4>
+        <h3>Contoh Situasi Usaha</h3>
         <table class="example-table">
             <tr>
-                <th>Kamu mendorong meja hingga bergeser</th>
-                <th>Kamu mendorong tembok sekuat tenaga tapi tembok diam</th>
-                <th>Kamu menarik troli ke depan, trolinya ikut bergerak</th>
-            </tr>
-            <tr>
-                <td>✅ Ada Usaha</td>
-                <td>❌ Tidak Ada Usaha</td>
-                <td>✅ Ada Usaha</td>
+                <td class="example-cell">
+                    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEhA4Ilvlp32eXO7hrDD9UBfZfLp2FPv5klXGaxVJkPlwiS9UYHqNID_OxnSm0DI4LmBeRnPgEr_NBSV-yQRyoSwXDYIpsRcJPvB4hMC2H5V9WknzYmaHe2Fsc9rxZIJxKwnEvWzmLtnYk3UBRESuOd2H-0A2epzgDI7aC28qNjn0cTm45uGZqTEZZMnLv4" alt="Mendorong meja hingga bergeser">
+                    <div>Mendorong meja hingga bergeser</div>
+                    <div class="example-label ada">Ada Usaha</div>
+                </td>
+                <td class="example-cell">
+                    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEi5OfyFccEPb_1QTjq58ajXaI3kffMWa-Lf0SfizRj1KUOmiKfDLsTzjSlVLWNnbEbt_VUWWu4bgnRZeO3Xfjxerr1t2Ti7G6hZjkRMPzIaLBHijhGqK6G5cG6yMH6KtzTJkvfVpQY-BnLho79i_OyGd5wW5RDnZ_s6Gp9XGACBIykeS9Gtt8jUbTHvg7Y" alt="Mendorong tembok sekuat tenaga tapi tembok diam">
+                    <div>Mendorong tembok sekuat tenaga, tapi tembok diam</div>
+                    <div class="example-label">Tidak Ada Usaha</div>
+                </td>
+                <td class="example-cell">
+                    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEixBGdebw30gVfES4ELqzF_ft5wDDcp3TCTU_XAr_AZXAY_ZCZ6CCoMeqE9GtIxKjYolvHgpxl17jRO1ybJ1Hz_85WZTUlWhXsEtENwgPcZ_swDE_6-gmpZFFvSv7jKVknZSCHkOEetGv_IlnkteHgbf5ub1N-0q0v9RYyYoUyEUgwVLSW6jMFw2XZQXCc" alt="Menarik troli ke depan">
+                    <div>Menarik troli ke depan, trolinya ikut bergerak</div>
+                    <div class="example-label ada">Ada Usaha</div>
+                </td>
             </tr>
         </table>
 
-        <h4>Jenis-Jenis Usaha</h4>
+        <h3>Jenis-Jenis Usaha</h3>
 
         <h4>1. Usaha Positif</h4>
         <p>
-            Terjadi ketika gaya searah dengan perpindahan benda. Gaya ini mempercepat gerakan benda.
+            Terjadi ketika gaya searah dengan perpindahan benda. Artinya, gaya mendorong atau menarik benda ke arah yang sama dengan geraknya, sehingga benda mempercepat atau makin bergerak.
         </p>
         <p><strong>Contoh:</strong> Mendorong gerobak ke depan, dan gerobaknya bergerak maju.</p>
+        <div class="illustration" style="text-align:center; margin:20px 0;">
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjNrmx2VLFd55NmhWk7EyFJRH0NB61jfdhqLZAShxDVUOLiNTc8q9ld6sda9cLTuci66LOu22k6ejL8onTOeyBDEnsS35jCPsOgFXbEI3FAZA8dO1fYNoQwJ1pXSzOgzPVnH6Az6CQ0lGjrmM1Y7pFwkXsGKBqi05MpaRatTBO9sRAa-q6bOCvtVoYJHKk" alt="Ilustrasi usaha positif" style="border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); max-width:100%; height:auto;">
+        </div>
 
         <h4>2. Usaha Negatif</h4>
         <p>
-            Terjadi ketika gaya berlawanan arah dengan perpindahan. Gaya ini memperlambat gerakan benda.
+            Terjadi ketika gaya berlawanan arah dengan perpindahan. Gaya ini bekerja untuk menghambat atau memperlambat gerakan benda.
         </p>
-        <p><strong>Contoh:</strong> Mobil bergerak maju lalu direm — gaya rem berlawanan arah dengan gerak mobil.</p>
+        <p><strong>Contoh:</strong> Mobil bergerak maju lalu direm, sehingga gaya rem berlawanan arah dengan gerak mobil.</p>
+        <div class="illustration" style="text-align:center; margin:20px 0;">
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjvCoMrLoUpqFfc-tuUb2vkpuf1TPSKbXf_cM6dL80_ea9Q11KxA7TTxgZjV8qnmJ09OZQA_U8PcNWBwL8Yi_4ATxBX5iqJm-uAflHMI8VYBE8Z1W9BrxE1ukGgtc_ObjlfDhZZa4piORbGCU6u8wwikP4O5tCOQUWZx_JwPjZiYNgaR1Em8HO_D8bNSfI" alt="Ilustrasi usaha negatif" style="border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); max-width:100%; height:auto;">
+        </div>
 
         <h4>3. Usaha di Bidang Datar</h4>
         <p>
-            Benda bergerak di permukaan datar (lantai, jalan, meja). Gaya kadang tidak sejajar dengan perpindahan, melainkan membentuk sudut θ.
+            Benda bergerak di permukaan datar (lantai, jalan). Gaya kadang membentuk sudut θ terhadap arah perpindahan.
         </p>
         <div class="formula">W = F · cosθ · s</div>
         <p><strong>Keterangan:</strong></p>
         <ul>
             <li><strong>θ</strong> = sudut antara gaya dan arah perpindahan</li>
         </ul>
+        <div class="illustration" style="text-align:center; margin:20px 0;">
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEgs0_iV6dzLXnwPHQi5LIAGHs-4gXCJBaBUJd8qJ3O7cIbJOkF2mSrOG94sg9uiV1_9BnVBpClFXcwIdtwZmSC0xEORYLcpo5KHrcQttaj6pSbedg9lVfRZYsZMH18PQBE0yZ1Tv0vpzhYYZA2nTmkbgc1ixXhxUQwgtzxMfamdXWObwqxdivFWW3ObNEU" alt="Ilustrasi bidang datar" style="border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); max-width:100%; height:auto;">
+        </div>
 
         <h4>4. Usaha di Bidang Miring</h4>
         <p>
-            Benda dipindahkan sepanjang permukaan miring (misal: papan miring). Gaya yang dominan adalah komponen berat sejajar bidang miring.
+            Benda dipindahkan sepanjang permukaan miring (misal: papan miring).
         </p>
         <div class="formula">W = m · g · sinθ · s</div>
+        <p><strong>Keterangan:</strong></p>
+        <ul>
+            <li><strong>m</strong> = massa benda (kg)</li>
+            <li><strong>g</strong> = percepatan gravitasi (9,8 m/s²)</li>
+            <li><strong>θ</strong> = sudut kemiringan</li>
+            <li><strong>s</strong> = perpindahan sepanjang bidang miring (m)</li>
+        </ul>
+        <div class="illustration" style="text-align:center; margin:20px 0;">
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEhk47KNdFU_SPCtcbkr6sqLJCpBi3cXQr-rIgwZ6fDSnHss67fp0x4LbDaumfO3i2X0tcinmUYNn3rZnE0qX1Kami29fHJeCjhPUmdPqfTBv5p5kmBVTeTjwXc63boQBbyBiLXK7yM6S54XYR5E5wEc5yogE7zTT0dsRlPXPy4bqUGAbxRGRVn9H2JJsIY" alt="Ilustrasi bidang miring" style="border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); max-width:100%; height:auto;">
+        </div>
+    </div>
 
-        <!-- PEMISAH -->
-        <hr style="margin: 40px 0; border: 1px solid #e0e0e0;">
-
-        <!-- BAGIAN ENERGI -->
-        <h3>🔹 ENERGI</h3>
+    <!-- ENERGI Content -->
+    <div id="energi" class="tab-content">
+        <h2>ENERGI</h2>
         <p>
-            Energi adalah kemampuan untuk melakukan usaha. Tanpa energi, benda tidak bisa bergerak dan sistem tidak berubah.
+            Apa itu energi? Energi adalah kemampuan untuk melakukan usaha. Tanpa adanya energi, sebuah benda tidak mungkin dapat bergerak, dan suatu sistem tidak akan mengalami perubahan. Dengan kata lain, energi adalah kemampuan untuk melakukan kerja atau menggerakkan suatu benda.
         </p>
-        <p><strong>Contoh:</strong> Mobil butuh bahan bakar, tubuh butuh makanan.</p>
+        <p><strong>Contoh:</strong> Mobil tidak bisa jalan tanpa energi dari bahan bakar, atau tubuh tidak dapat beraktivitas jika tidak memiliki energi dari makanan.</p>
 
-        <h4>Sifat-Sifat Energi</h4>
+        <h3>Sifat-Sifat Energi</h3>
         <ul>
             <li>
                 <strong>Energi tidak bisa diciptakan atau dimusnahkan</strong><br>
-                Hukum Kekekalan Energi (James Prescott Joule): energi hanya berubah bentuk atau berpindah.
+                Seperti yang dikatakan oleh James Prescott Joule: “energi tidak dapat diciptakan maupun dimusnahkan, namun dapat berpindah dari satu bentuk ke bentuk lainnya”. Ini dikenal sebagai <strong>Hukum Kekekalan Energi</strong>.
                 <div class="formula">Em₁ = Em₂ &nbsp; atau &nbsp; Ek₁ + Ep₁ = Ek₂ + Ep₂</div>
             </li>
             <li>
                 <strong>Energi dapat berubah bentuk</strong><br>
-                Contoh: listrik → cahaya (lampu), listrik → gerak (kipas angin).
+                Contoh:<br>
+                – Lampu: energi listrik → energi cahaya + panas.<br>
+                – Kipas angin: energi listrik → energi gerak.
             </li>
             <li>
                 <strong>Energi dapat berpindah</strong><br>
-                Contoh: panas api → panci → air mendidih.
+                Contoh:<br>
+                – Energi panas dari api → panci → air mendidih.<br>
+                – Energi listrik dari stopkontak → baterai (disimpan sebagai energi kimia).
             </li>
             <li>
                 <strong>Energi dapat disimpan</strong><br>
-                Contoh: baterai (energi kimia), aki (energi listrik tersimpan).
+                Contoh:<br>
+                – Baterai menyimpan energi kimia, lalu diubah jadi listrik.<br>
+                – Aki menyimpan energi listrik untuk menyalakan mesin.
             </li>
         </ul>
 
-        <h4>Jenis-Jenis Energi</h4>
+        <h3>Jenis-Jenis Energi</h3>
 
         <h4>1. Energi Kinetik (Ek)</h4>
         <p>Energi karena gerak. Jika benda diam, Ek = 0.</p>
         <div class="formula">Ek = ½ · m · v²</div>
+        <p><strong>Keterangan:</strong></p>
+        <ul>
+            <li>Ek = energi kinetik (J)</li>
+            <li>m = massa benda (kg)</li>
+            <li>v = kecepatan benda (m/s)</li>
+        </ul>
 
         <h4>2. Energi Potensial (Ep)</h4>
-        <p>Energi karena posisi/ketinggian terhadap acuan (misal: lantai).</p>
+        <p>Energi karena posisi/kedudukan terhadap acuan (misal: lantai).</p>
         <div class="formula">Ep = m · g · h</div>
+        <p><strong>Keterangan:</strong></p>
+        <ul>
+            <li>Ep = energi potensial (J)</li>
+            <li>m = massa (kg)</li>
+            <li>g = percepatan gravitasi (9,8 m/s²)</li>
+            <li>h = ketinggian benda (m)</li>
+        </ul>
 
         <h4>3. Energi Mekanik (Em)</h4>
-        <p>Jumlah total energi kinetik dan potensial.</p>
+        <p>Total energi kinetik + energi potensial.</p>
         <div class="formula">Em = Ek + Ep</div>
         <p><strong>Contoh:</strong></p>
         <ul>
-            <li>Bola dilempar ke atas: di bawah → Ek besar, Ep kecil; di atas → Ep besar, Ek kecil. **Em tetap!**</li>
-            <li>Roller coaster: naik → Ep besar, turun → Ek besar.</li>
+            <li><strong>Bola dilempar ke atas:</strong><br>
+                – Di bawah: Ek besar, Ep kecil.<br>
+                – Di atas: Ep besar, Ek kecil.<br>
+                – Total Em tetap (konservasi energi).
+            </li>
+            <li><strong>Roller coaster:</strong><br>
+                – Naik → Ep besar<br>
+                – Turun → Ek besar
+            </li>
         </ul>
     </div>
 
     <button class="back-btn" onclick="window.location.href='home.html'">Kembali ke Home</button>
 
     <script>
+        // Cek login
         const nama = localStorage.getItem('namaPengguna');
         if (nama) {
             document.getElementById('greeting').textContent = `Hai, ${nama}`;
         } else {
             window.location.href = 'index.html';
+        }
+
+        // Tab switching
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
         }
     </script>
 </body>
