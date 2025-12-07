@@ -27,6 +27,7 @@
             padding: 15px 25px;
             border-radius: 12px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
         }
 
         .header h1 {
@@ -35,9 +36,43 @@
             font-size: 1.8rem;
         }
 
+        .learning-objectives {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            max-width: 900px;
+            margin: 0 auto 30px;
+        }
+
+        .learning-objectives h2 {
+            color: #007bff;
+            margin-top: 0;
+            font-weight: 700;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .learning-objectives ul {
+            margin: 15px 0 0 25px;
+            padding-left: 10px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .learning-objectives li {
+            margin-bottom: 12px;
+        }
+
+        .learning-objectives p {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #0056b3;
+        }
+
         .menu {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
         button {
@@ -74,11 +109,23 @@
         <span id="greeting">Hai, </span>
     </div>
 
+    <!-- Tujuan Pembelajaran -->
+    <div class="learning-objectives">
+        <h2>Simulasi Usaha dan Energi Tanpa Gesekan</h2>
+        <p><strong>Tujuan Pembelajaran</strong></p>
+        <p>Setelah kegiatan ini, peserta didik diharapkan mampu:</p>
+        <ul>
+            <li>Menjelaskan konsep energi potensial gravitasi, energi kinetik, dan energi mekanik pada benda yang bergerak tanpa gesekan.</li>
+            <li>Menunjukkan hubungan konservasi energi mekanik melalui hasil simulasi.</li>
+            <li>Menafsirkan diagram batang energi (bar chart) untuk menunjukkan bahwa:<br>
+                <strong>E<sub>mekanik</sub> = E<sub>potensial</sub> + E<sub>kinetik</sub></strong>
+            </li>
+        </ul>
+    </div>
+
     <div class="menu">
-        <!-- <button onclick="window.location.href='energi/index.html'">Menu Simulasi Energi</button> -->
         <button onclick="window.location.href='materi.html'">Materi</button>
         <button onclick="window.location.href='video.html'">Video</button>
-        <!-- <button onclick="window.location.href='simulasi.html'">Latihan Soal dan Kuis</button> -->
         <button class="logout" onclick="logout()">Logout</button>
     </div>
 

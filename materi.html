@@ -53,6 +53,7 @@
             margin-top: 25px;
             font-weight: 700;
             font-size: 1.6rem;
+            text-align: center;
         }
 
         h3 {
@@ -103,24 +104,21 @@
             border-radius: 0 8px 8px 0;
         }
 
-        button {
-            padding: 12px 24px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            margin: 12px 6px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            font-family: 'Comic Neue', cursive;
-            transition: all 0.25s ease;
+        .example-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 1rem;
         }
-
-        button:hover {
-            background-color: #218838;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        .example-table th,
+        .example-table td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: center;
+        }
+        .example-table th {
+            background-color: #e9f0ff;
+            color: #0056b3;
         }
 
         .back-btn {
@@ -146,11 +144,6 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
-
-        .center-buttons {
-            text-align: center;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
@@ -160,122 +153,123 @@
     </div>
 
     <div class="content">
-        <h2>MATERI USAHA DAN ENERGI</h2>
+        <h2>PEMBAHARUAN MATERI: USAHA & ENERGI</h2>
 
-        <h3>Usaha (Work)</h3>
+        <!-- BAGIAN USAHA -->
+        <h3>🔹 USAHA</h3>
         <p>
-            Usaha adalah upaya untuk memindahkan suatu benda/beban pada jarak tertentu. Dengan kata lain, energi yang dialirkan untuk menggerakkan suatu benda dengan gaya tertentu.
+            Usaha adalah energi yang digunakan untuk menggerakkan suatu benda. Dengan kata lain, usaha adalah seberapa banyak dorongan atau tarikan yang benar-benar membuat suatu benda bergerak.
+            Jadi, apabila kita mendorong benda tetapi benda tidak bergerak, maka tidak ada usaha yang dilakukan.
         </p>
         <div class="formula">W = F · s</div>
         <p><strong>Keterangan:</strong></p>
         <ul>
             <li><strong>W</strong> = Usaha (Joule)</li>
             <li><strong>F</strong> = Gaya yang diberikan (Newton)</li>
-            <li><strong>s</strong> = Perpindahan benda (Meter)</li>
+            <li><strong>s</strong> = Perpindahan benda (meter)</li>
         </ul>
         <p>
-            Nah, ada dua hal yang harus diperhatikan dalam rumus usaha tersebut, yakni gaya dan perpindahan. Kenapa harus ada hal tersebut?
-            Contohnya begini: kalau kamu mendorong meja sekuat tenaga (melakukan gaya), tetapi meja itu tidak berpindah sama sekali (tidak ada perpindahan),
-            maka secara fisika, hal tersebut tidak melakukan usaha, meskipun tubuhmu merasa capek.
+            Ada dua hal yang perlu diperhatikan dalam rumus usaha, yakni: gaya dan perpindahan.
+            Sebab, jika kamu mendorong meja sekuat tenaga (melakukan gaya) tetapi meja itu tidak berpindah sama sekali (tidak ada perpindahan),
+            maka secara fisika hal tersebut tidak melakukan usaha meskipun tubuhmu merasa capek dan lelah.
         </p>
 
-        <div class="illustration">
-            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEgofk4qKHwcEYCEl5MSczgNDLCh0I6C4MDoIuScEeE3oqtMUjAiBttqNhcnC_r5kZ1oYyZCJQkf8odLWbjpe8sgBIxE03u82ZjZ0NVRTFhZ5qX5gmOKViOMMFjZhBqnEoZliW-flqm8w6pRaGq3wM4yBdv4FUjdtwlrFPhFfuYrAh8xmiWBRNRvTqf3oWY" alt="Ilustrasi Usaha">
-        </div>
+        <h4>Contoh Situasi Usaha</h4>
+        <table class="example-table">
+            <tr>
+                <th>Kamu mendorong meja hingga bergeser</th>
+                <th>Kamu mendorong tembok sekuat tenaga tapi tembok diam</th>
+                <th>Kamu menarik troli ke depan, trolinya ikut bergerak</th>
+            </tr>
+            <tr>
+                <td>✅ Ada Usaha</td>
+                <td>❌ Tidak Ada Usaha</td>
+                <td>✅ Ada Usaha</td>
+            </tr>
+        </table>
 
-        <h3>Jenis-Jenis Usaha</h3>
+        <h4>Jenis-Jenis Usaha</h4>
+
+        <h4>1. Usaha Positif</h4>
         <p>
-            Secara umum, usaha itu dibagi menjadi 2 jenis, yaitu usaha positif dan usaha negatif.
+            Terjadi ketika gaya searah dengan perpindahan benda. Gaya ini mempercepat gerakan benda.
         </p>
+        <p><strong>Contoh:</strong> Mendorong gerobak ke depan, dan gerobaknya bergerak maju.</p>
 
-        <h4>Usaha Positif</h4>
+        <h4>2. Usaha Negatif</h4>
         <p>
-            Usaha positif ini terjadi apabila gaya yang diberikan searah dengan perpindahan benda.
-            Contoh: ketika kamu mendorong troli belanja ke depan, doronganmu akan searah dengan arah bergeraknya troli, sehingga usahanya positif.
+            Terjadi ketika gaya berlawanan arah dengan perpindahan. Gaya ini memperlambat gerakan benda.
         </p>
+        <p><strong>Contoh:</strong> Mobil bergerak maju lalu direm — gaya rem berlawanan arah dengan gerak mobil.</p>
 
-        <h4>Usaha Negatif</h4>
+        <h4>3. Usaha di Bidang Datar</h4>
         <p>
-            Sebaliknya dengan usaha positif, usaha negatif ini terjadi apabila gaya yang diberikan berlawanan arah dengan perpindahan.
-            Contoh: saat rem motor ditekan, maka bantalan rem akan menekan roda berlawanan arah dengan gerakan rodanya.
-            Sehingga, perlahan roda tersebut melambat. Jadi, usaha yang dilakukan negatif.
+            Benda bergerak di permukaan datar (lantai, jalan, meja). Gaya kadang tidak sejajar dengan perpindahan, melainkan membentuk sudut θ.
         </p>
-
-        <h3>Energi (Energy)</h3>
-        <p>
-            Apa itu energi? Energi adalah kemampuan untuk melakukan usaha. Tanpa adanya energi, sebuah benda tidak mungkin dapat bergerak,
-            dan suatu sistem tidak akan mengalami perubahan. Dengan kata lain, energi adalah kemampuan untuk melakukan kerja atau menggerakkan suatu benda.
-        </p>
-        <p>
-            <strong>Contoh:</strong> mobil tidak bisa jalan tanpa adanya energi dari bahan bakar,
-            atau tubuh tidak dapat beraktivitas jika tidak memiliki energi dari makanan.
-        </p>
-
-        <h3>Sifat-Sifat Energi</h3>
+        <div class="formula">W = F · cosθ · s</div>
+        <p><strong>Keterangan:</strong></p>
         <ul>
-            <li><strong>Energi tidak bisa diciptakan atau dimusnahkan</strong><br>
-                Seperti yang dikatakan oleh ahli fisika berkebangsaan Inggris yang bernama James Prescott Joule,
-                berbunyi: “energi tidak dapat diciptakan maupun dimusnahkan, namun dapat berpindah dari satu bentuk ke bentuk lainnya”.
-                Ini dikenal sebagai <strong>Hukum Kekekalan Energi</strong>.
+            <li><strong>θ</strong> = sudut antara gaya dan arah perpindahan</li>
+        </ul>
+
+        <h4>4. Usaha di Bidang Miring</h4>
+        <p>
+            Benda dipindahkan sepanjang permukaan miring (misal: papan miring). Gaya yang dominan adalah komponen berat sejajar bidang miring.
+        </p>
+        <div class="formula">W = m · g · sinθ · s</div>
+
+        <!-- PEMISAH -->
+        <hr style="margin: 40px 0; border: 1px solid #e0e0e0;">
+
+        <!-- BAGIAN ENERGI -->
+        <h3>🔹 ENERGI</h3>
+        <p>
+            Energi adalah kemampuan untuk melakukan usaha. Tanpa energi, benda tidak bisa bergerak dan sistem tidak berubah.
+        </p>
+        <p><strong>Contoh:</strong> Mobil butuh bahan bakar, tubuh butuh makanan.</p>
+
+        <h4>Sifat-Sifat Energi</h4>
+        <ul>
+            <li>
+                <strong>Energi tidak bisa diciptakan atau dimusnahkan</strong><br>
+                Hukum Kekekalan Energi (James Prescott Joule): energi hanya berubah bentuk atau berpindah.
                 <div class="formula">Em₁ = Em₂ &nbsp; atau &nbsp; Ek₁ + Ep₁ = Ek₂ + Ep₂</div>
             </li>
-            <li><strong>Energi dapat berubah bentuknya</strong><br>
-                Contoh: energi listrik → energi cahaya (lampu), energi potensial → energi listrik (PLTA).
+            <li>
+                <strong>Energi dapat berubah bentuk</strong><br>
+                Contoh: listrik → cahaya (lampu), listrik → gerak (kipas angin).
             </li>
-            <li><strong>Energi dapat berpindah</strong><br>
-                Contoh: saat memasak air, energi panas berpindah dari api → panci → air.
+            <li>
+                <strong>Energi dapat berpindah</strong><br>
+                Contoh: panas api → panci → air mendidih.
             </li>
-            <li><strong>Energi dapat disimpan</strong><br>
-                Contoh: energi kimia dalam baterai, bensin, atau makanan.
+            <li>
+                <strong>Energi dapat disimpan</strong><br>
+                Contoh: baterai (energi kimia), aki (energi listrik tersimpan).
             </li>
         </ul>
 
-        <h3>Jenis-Jenis Energi</h3>
+        <h4>Jenis-Jenis Energi</h4>
 
-        <h4>Energi Kinetik</h4>
-        <p>
-            Energi kinetik adalah energi yang dimiliki oleh suatu benda karena gerakannya.
-            Semakin cepat sebuah benda bergerak atau semakin besar massanya, maka semakin besar pula energi kinetik yang dimilikinya.
-            Jika benda diam, energi kinetiknya nol.
-        </p>
+        <h4>1. Energi Kinetik (Ek)</h4>
+        <p>Energi karena gerak. Jika benda diam, Ek = 0.</p>
         <div class="formula">Ek = ½ · m · v²</div>
-        <p><strong>Keterangan:</strong></p>
-        <ul>
-            <li>Ek = energi kinetik (J)</li>
-            <li>m = massa benda (kg)</li>
-            <li>v = kecepatan benda (m/s)</li>
-        </ul>
 
-        <h4>Energi Potensial</h4>
-        <p>
-            Energi potensial adalah energi yang dimiliki benda karena kedudukannya terhadap bumi (ketinggian).
-            Contoh: buah apel di atas meja memiliki energi potensial karena posisinya lebih tinggi dari lantai.
-        </p>
+        <h4>2. Energi Potensial (Ep)</h4>
+        <p>Energi karena posisi/ketinggian terhadap acuan (misal: lantai).</p>
         <div class="formula">Ep = m · g · h</div>
-        <p><strong>Keterangan:</strong></p>
-        <ul>
-            <li>Ep = energi potensial (J)</li>
-            <li>m = massa (kg)</li>
-            <li>g = percepatan gravitasi (9,8 m/s²)</li>
-            <li>h = ketinggian benda (m)</li>
-        </ul>
 
-        <h4>Energi Mekanik</h4>
-        <p>
-            Energi mekanik adalah total dari energi kinetik dan energi potensial.
-        </p>
+        <h4>3. Energi Mekanik (Em)</h4>
+        <p>Jumlah total energi kinetik dan potensial.</p>
         <div class="formula">Em = Ek + Ep</div>
-
-        <div class="center-buttons">
-            <button onclick="window.location.href='energi/index.html'">Menu Simulasi Energi</button>
-        </div>
-
-        <button class="back-btn" onclick="window.location.href='https://mediabelajar.web.id'">Sumber Materi Pembelajaran</button>
+        <p><strong>Contoh:</strong></p>
+        <ul>
+            <li>Bola dilempar ke atas: di bawah → Ek besar, Ep kecil; di atas → Ep besar, Ek kecil. **Em tetap!**</li>
+            <li>Roller coaster: naik → Ep besar, turun → Ek besar.</li>
+        </ul>
     </div>
 
-    <div style="text-align: center;">
-        <button class="back-btn" onclick="window.location.href='home.html'">Kembali</button>
-    </div>
+    <button class="back-btn" onclick="window.location.href='home.html'">Kembali ke Home</button>
 
     <script>
         const nama = localStorage.getItem('namaPengguna');
