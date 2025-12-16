@@ -235,9 +235,9 @@
             window.location.href = 'index.html';
         }
 
-        // Jawaban benar
+        // Jawaban benar / kunci jawaban
         const correct = {
-            q1: 5000,
+            q1: 5000, // q: nomor pertanyaan
             q2: 3000,
             q3: 1300,
             q4a: 0,
@@ -251,7 +251,7 @@
             q10: 80
         };
 
-        function isCorrect(user, correctVal) {
+        function isCorrect(user, correctVal) { // fungsi untuk menghitung jumlah benar
             if (user === null || isNaN(user)) return false;
             const diff = Math.abs(user - correctVal);
             if (Number.isInteger(correctVal)) {
@@ -261,7 +261,7 @@
             }
         }
 
-        function submitLatsol() {
+        function submitLatsol() { // fungsi untuk mengambil jawaban siswa, dan membandingkan dengan kunci jawaban
             let score = 0;
             let detailsHTML = '';
             const questions = ['q1','q2','q3','q4a','q4b','q5','q6a','q6b','q7','q8','q9','q10'];

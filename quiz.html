@@ -136,6 +136,7 @@
     </div>
 
     <div class="quiz-container">
+        <!-- Soal pilihan ganda, tiap opsi jawaban memiliki value A,B,C, dan D, q: nomor pertanyaan -->
         <form id="quizForm">
             <!-- Soal 1 -->
             <div class="question">
@@ -268,7 +269,7 @@
             window.location.href = 'index.html';
         }
 
-        const correctAnswers = {
+        const correctAnswers = { // kunci jawaban
             q1: 'B',
             q2: 'C',
             q3: 'B',
@@ -281,7 +282,7 @@
             q10: 'B'
         };
 
-        function submitQuiz() {
+        function submitQuiz() { // untuk  mengambil jawaban siswa, dan membandingkan dengan kunci jawaban
             let score = 0;
             let detailsHTML = '';
 
@@ -294,7 +295,7 @@
 
                 if (isCorrect) score++;
 
-                const icon = isCorrect ? '✅' : '❌';
+                const icon = isCorrect ? '✅' : '❌'; // memberikan hasil jawaban
                 detailsHTML += `<p><strong>Soal ${i}:</strong> Jawaban Anda: ${userAnswer} | Benar: ${correct} ${icon}</p>`;
             }
 
